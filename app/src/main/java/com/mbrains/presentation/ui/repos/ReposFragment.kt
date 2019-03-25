@@ -3,6 +3,7 @@ package com.mbrains.presentation.ui.repos
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +17,13 @@ import com.mbrains.R
 import com.mbrains.data.datasource.NetworkState
 import com.mbrains.data.datasource.Status
 import com.mbrains.data.models.Repos
+import com.mbrains.domain.RealmManager
+import com.mbrains.presentation.ui.callback.ItemClickListener
+import com.mbrains.presentation.ui.details.DetailFragment
+import kotlinx.android.synthetic.main.fragment_favorites.view.*
 import kotlinx.android.synthetic.main.fragment_repos.*
+import kotlinx.android.synthetic.main.fragment_repos.view.*
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,28 +51,13 @@ class ReposFragment : Fragment() {
         super.onCreate(savedInstanceState)
         reposViewModel = ViewModelProviders.of(this)
             .get(ReposViewModel::class.java)
+        Log.d("NAIL", "onCreate")
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        rvRepos.layoutManager = linearLayoutManager
-
-        reposAdapter = ReposAdapter({
-            reposViewModel.retry()
-        }, object : ReposAdapter.ItemClickListener {
-            override fun onItemClicked(repos: Repos) {
-                if (!repos.url.isNullOrBlank()) {
-                    // val i = Intent(Intent.ACTION_VIEW)
-                    // i.data = Uri.parse(repos.url)
-                    // startActivity(i)
-                    Toast.makeText(context, "Repos: " + repos!!.name, Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-        rvRepos.adapter = reposAdapter
+        Log.d("NAIL", "onViewCreated")
 
 
         etQuery.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
@@ -80,24 +72,60 @@ class ReposFragment : Fragment() {
         swipeContainer.setOnRefreshListener {
             loadRequest(request);
         }
-
     }
+
+    val realmManager =  RealmManager()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_repos, container, false)
 
-        return rootView
+        val view = inflater.inflate(R.layout.fragment_repos, container, false)
+
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        view.rvRepos.layoutManager = linearLayoutManager
+
+        reposAdapter = ReposAdapter({
+            reposViewModel.retry()
+        }, object : ItemClickListener {
+            override fun onItemClicked(repos: Repos) {
+                if (!repos.url.isNullOrBlank()) {
+                    val transaction = getParentFragment()!!.childFragmentManager.beginTransaction()
+                    val name = repos.name!!
+                    val description = repos.description!!
+                    transaction.replace(R.id.tabrepos_frame, DetailFragment.newInstance(name, description))
+                    transaction.addToBackStack(null);
+                    transaction.commit()
+                }
+            }
+        })
+        view.rvRepos.adapter = reposAdapter
+
+
+
+        reposViewModel.reposList?.observe(this@ReposFragment, Observer<PagedList<Repos>> {
+                reposAdapter?.submitList(it)
+        })
+
+        view.btnAdd.setOnClickListener({
+            var r = Random()
+            realmManager.insert(r.nextLong().toString())
+        })
+
+            Log.d("NAIL", "onCreateView")
+        return view
     }
 
     fun loadRequest(name: String) {
+        Log.d("NAIL", "loadRequest")
+
 
         reposViewModel.initSearch(name)
 
 
         reposViewModel.reposList!!.observe(this@ReposFragment, Observer<PagedList<Repos>> {
+            Log.d("NAIL","it: " + it!!.size.toString())
             reposAdapter.submitList(it)
         })
 

@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'realm-android'
 
 
@@ -49,8 +51,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-
-
     // Network
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
@@ -68,7 +68,6 @@ dependencies {
 
     //Paging
     implementation "android.arch.paging:runtime:1.0.1"
-
 
     //Rx
     implementation 'io.reactivex.rxjava2:rxjava:2.1.10'

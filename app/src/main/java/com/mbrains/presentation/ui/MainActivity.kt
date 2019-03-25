@@ -5,10 +5,8 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity;
 import com.mbrains.R
-import com.mbrains.presentation.ui.PagerAdapter
-
-
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,8 +23,22 @@ class MainActivity : AppCompatActivity() {
         // Передаём ViewPager в TabLayout
         val tabLayout = findViewById<TabLayout>(R.id.sliding_tabs)
         tabLayout.setupWithViewPager(viewPager)
+    }
 
 
+
+    override fun onBackPressed() {
+        val fm = supportFragmentManager
+        for (frag in fm.fragments) {
+            if (frag.isVisible) {
+                val childFm = frag.childFragmentManager
+                if (childFm.backStackEntryCount > 0) {
+                    childFm.popBackStack()
+                    return
+                }
+            }
+        }
+        super.onBackPressed()
     }
 
 

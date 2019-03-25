@@ -13,9 +13,9 @@ class PagerAdapter(private val mContext: Context, fm: FragmentManager) : Fragmen
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 ->
-                ReposFragment()
+                TabReposFragment()
             else ->
-                FavoritesFragment()
+                TabFavoriteFragment()
         }
     }
 
