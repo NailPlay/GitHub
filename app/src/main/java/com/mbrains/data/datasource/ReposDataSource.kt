@@ -1,11 +1,9 @@
 package com.mbrains.data.datasource
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
-import com.mbrains.data.models.Repos
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.paging.ItemKeyedDataSource
 import android.util.Log
-import com.mbrains.data.services.ApiServies
+import com.mbrains.data.models.Repos
 import com.mbrains.domain.ApiManager
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,7 +30,8 @@ class ReposDataSource(
             compositeDisposable.add(retryCompletable!!
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ }, { throwable -> Log.d("nail",throwable.message) }))
+                .subscribe({ }, { throwable -> Log.d("nail", throwable.message) })
+            )
         }
     }
 
@@ -43,7 +42,6 @@ class ReposDataSource(
             this.retryCompletable = Completable.fromAction(action)
         }
     }
-
 
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Repos>) {
@@ -72,7 +70,7 @@ class ReposDataSource(
                 .subscribe({ repos ->
                     setRetry(null)
                     networkState.postValue(NetworkState.LOADED)
-                    callback.onResult(repos, params.key+1)
+                    callback.onResult(repos, params.key + 1)
                 }, { t ->
                     setRetry(Action { loadAfter(params, callback) })
                     networkState.postValue(NetworkState.error(t.message))
@@ -82,8 +80,6 @@ class ReposDataSource(
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Repos>) {
-        // вверх
     }
-
 
 }

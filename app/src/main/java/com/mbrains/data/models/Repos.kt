@@ -2,6 +2,7 @@ package com.mbrains.data.models
 
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
 public open class Repos(
@@ -10,7 +11,15 @@ public open class Repos(
     @SerializedName("description") var description: String? = null,
     @SerializedName("forks_count") var forks_count: String? = null,
     @SerializedName("language") var language: String? = null,
-    @SerializedName("html_url") var url: String? = null,
+    @SerializedName("html_url") var html_url: String? = null,
     @SerializedName("stargazers_count") var startCount: Int? = null,
-    @SerializedName("watchers_count") var watchersCount: Int? = null
-) : RealmObject()
+    @Ignore
+    @SerializedName("owner") var owner_: owner? = null,
+    @SerializedName("full_name") var fullName: String? = null,
+    @SerializedName("watchers_count") var watchersCount: Int? = null,
+    var avatar_url: String? = null
+): RealmObject(){
+   inner class owner {
+       @SerializedName("avatar_url") var avatarUrl: String? = null
+   }
+}

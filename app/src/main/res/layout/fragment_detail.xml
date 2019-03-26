@@ -1,18 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               tools:context=".presentation.ui.details.DetailFragment" android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" android:id="@+id/tvName"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tvCaption"/>
+            android:id="@+id/progressCommit"
+            app:layout_constraintBottom_toBottomOf="@+id/rvCommit" app:layout_constraintTop_toTopOf="@+id/rvCommit"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="@+id/rvCommit" android:layout_marginStart="8dp"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/rvCommit" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:id="@+id/constraintLayout">
 
-</LinearLayout>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="name" android:id="@+id/tvName"
+                android:fontFamily="monospace"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/avatar"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"/>
+        <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/avatar"
+                android:scaleType="centerCrop" android:src="@drawable/ic_launcher_background"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginTop="4dp"
+                app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="htmlurl" android:id="@+id/tvHtmlrl"
+                android:fontFamily="monospace"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvFullname" app:layout_constraintStart_toEndOf="@+id/avatar"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="fullname" android:id="@+id/tvFullname"
+                android:fontFamily="monospace"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toEndOf="@+id/avatar"
+                android:layout_marginStart="8dp" app:layout_constraintTop_toBottomOf="@+id/tvName"
+                android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"/>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

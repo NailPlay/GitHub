@@ -1,20 +1,19 @@
 package com.mbrains.presentation.ui.favorites
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.mbrains.R
 import com.mbrains.data.models.Repos
 import com.mbrains.presentation.ui.callback.ItemClickListener
-import com.mbrains.presentation.ui.viewholder.NetworkStateViewHolder
 import com.mbrains.presentation.ui.viewholder.ReposViewHolder
-import com.mbrains.R.id.imageView
-import android.graphics.Picture
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout
 import kotlinx.android.synthetic.main.repo_item.view.*
 
 
 class FavoritesAdapter(
     var items: List<Repos>,
-    var listener : ItemClickListener
+    var listenerItem : ItemClickListener,
+    var listenerDelete: ItemClickListener
 ) : RecyclerView.Adapter<ReposViewHolder>() {
 
 
@@ -28,8 +27,18 @@ class FavoritesAdapter(
     }
 
     override fun onBindViewHolder(holder: ReposViewHolder, position: Int) {
-        holder.view.repo_name.text = items.get(position).name!!
-        holder.view.repo_name.setOnClickListener({ v -> listener.onItemClicked(items.get(position)) })
+        holder.view.repo_name.text = items.get(position).name
+        holder.view.repo_description.text = items.get(position).description
+        holder.view.repo_language.text = items.get(position).language
+        holder.view.repo_stars.text = items.get(position).startCount.toString()
+        holder.view.repo_forks.text = items.get(position).forks_count
+        holder.view.cardViewContent.setOnClickListener({ v -> listenerItem.onItemClicked(items.get(position)) })
+        holder.view.btnSwipe.text = "Delete"
+        holder.view.btnSwipe.setBackgroundColor(Color.RED)
+        holder.view.btnSwipe.setOnClickListener({
+            (holder.itemView.swipeMenu as SwipeMenuLayout).quickClose()
+            listenerDelete.onItemClicked(items.get(position))
+        })
 
     }
 

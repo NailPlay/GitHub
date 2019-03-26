@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.mbrains.R
-import com.mbrains.presentation.ui.favorites.FavoritesFragment
-import com.mbrains.presentation.ui.repos.ReposFragment
 
 class PagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
