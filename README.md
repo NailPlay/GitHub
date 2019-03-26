@@ -1,5 +1,5 @@
 # MBrains
 
-<img src="https://raw.githubusercontent.com/NailPlay/MBrains/master/MBrains.gif" width="320" height="690">
+<img src="https://raw.githubusercontent.com/NailPlay/MBrains/master/MBrains.gif" width="320" height="490">
 
 
