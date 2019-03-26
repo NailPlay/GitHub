@@ -7,11 +7,11 @@ import io.reactivex.Single
 
 class ApiManager {
 
-    var reposService: ApiServies = ApiServies()
+    private var reposService: ApiServies = ApiServies()
 
     fun getListOfRepos(user: String, page: Int, perPage: Int): Single<List<Repos>> {
         return reposService.getRepos(user, page, perPage)
-            .onErrorResumeNext({ throwable -> Single.error(throwable) })
+            .onErrorResumeNext { throwable -> Single.error(throwable) }
             .flatMap { response ->
                 if (!response.isSuccessful) {
                     Single.error(Throwable(response.code().toString()))
@@ -23,7 +23,7 @@ class ApiManager {
 
     fun getListOfCommits(fullname: String): Single<List<Commits>> {
         return reposService.getCommit(fullname)
-            .onErrorResumeNext({ throwable -> Single.error(throwable) })
+            .onErrorResumeNext { throwable -> Single.error(throwable) }
             .flatMap { response ->
                 if (!response.isSuccessful) {
                     Single.error(Throwable(response.code().toString()))

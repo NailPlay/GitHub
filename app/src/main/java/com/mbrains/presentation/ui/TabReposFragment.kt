@@ -14,7 +14,7 @@ class TabReposFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var v =  inflater.inflate(R.layout.fragment_tab_repos, container, false)
+        val v =  inflater.inflate(R.layout.fragment_tab_repos, container, false)
         val manager = childFragmentManager
         val transaction = manager.beginTransaction()
         transaction.replace(R.id.tabrepos_frame, ReposFragment())

@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormat
 
 
 class CommitAdapter(
-    var items: List<Commits>
+    private var items: List<Commits>
 ) : RecyclerView.Adapter<CommitViewHolder>() {
 
     fun updateItems(item: List<Commits>) {
@@ -22,10 +22,10 @@ class CommitAdapter(
     }
 
     override fun onBindViewHolder(holder: CommitViewHolder, position: Int) {
-        holder.view.message.text = items.get(position).commit?.message
-        holder.view.nameAuthor.text = items.get(position).commit?.author?.name
+        holder.view.message.text = items[position].commit?.message
+        holder.view.nameAuthor.text = items[position].commit?.author?.name
         val dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        val dt = dtf.parseDateTime(items.get(position).commit?.author?.date)
+        val dt = dtf.parseDateTime(items[position].commit?.author?.date)
         val date = dt.toLocalDate()
         holder.view.date.text = date.toString()
     }

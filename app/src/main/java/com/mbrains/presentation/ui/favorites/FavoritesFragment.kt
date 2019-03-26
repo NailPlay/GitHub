@@ -39,10 +39,10 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var v = inflater.inflate(R.layout.fragment_favorites, container, false)
+        val v = inflater.inflate(R.layout.fragment_favorites, container, false)
         adapter = FavoritesAdapter(favoriteList, object : ItemClickListener {
             override fun onItemClicked(repos: Repos) {
-                val transaction = getParentFragment()!!.childFragmentManager.beginTransaction()
+                val transaction = parentFragment!!.childFragmentManager.beginTransaction()
                 val name = repos.name ?: "-"
                 val fullname = repos.fullName ?: "-"
                 val html_url = repos.html_url ?: "-"
@@ -70,7 +70,7 @@ class FavoritesFragment : Fragment() {
                 Log.d("NAIL", x.id.toString() + " - " + x.name.toString())
             }
 
-            var list = realmManager.findAll()
+            val list = realmManager.findAll()
             adapter!!.updateItems(list)
 
         })

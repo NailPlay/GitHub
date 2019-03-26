@@ -42,21 +42,21 @@ class DetailFragment : Fragment() {
 
     private val commitsList = Collections.emptyList<Commits>()
 
-    var manager: ApiManager = ApiManager()
-    var compositeDisposable = CompositeDisposable()
+    private var manager: ApiManager = ApiManager()
+    private var compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var v = inflater.inflate(R.layout.fragment_detail, container, false)
+        val v = inflater.inflate(R.layout.fragment_detail, container, false)
         v.tvName.text = name.toString()
         v.tvFullname.text = full_name.toString()
         v.tvHtmlrl.text = html_url.toString()
         Picasso.with(context).load(avatar_url).error(R.drawable.no_image).into(v.avatar)
 
-        var adapter = CommitAdapter(commitsList)
+        val adapter = CommitAdapter(commitsList)
         v.rvCommit.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         v.rvCommit.layoutManager = layoutManager
@@ -66,7 +66,7 @@ class DetailFragment : Fragment() {
         compositeDisposable.add(manager.getListOfCommits(full_name ?: "").subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ repos ->
-                adapter!!.updateItems(repos)
+                adapter.updateItems(repos)
                 v.progressCommit.visibility = View.GONE
             }, { t ->
                 Toast.makeText(context, "Error: " + t.message, Toast.LENGTH_LONG).show()

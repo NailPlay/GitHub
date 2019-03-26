@@ -17,7 +17,7 @@ class ReposDataSource(
     private val request: String
 ) : PageKeyedDataSource<Int, Repos>() {
 
-    var manager: ApiManager = ApiManager()
+    private var manager: ApiManager = ApiManager()
 
     val networkState = MutableLiveData<NetworkState>()
 

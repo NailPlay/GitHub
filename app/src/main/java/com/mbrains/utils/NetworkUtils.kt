@@ -12,7 +12,7 @@ object NetworkUtils {
     val retrofit : Retrofit
     val gson = Gson()
     init {
-        var okhttpClient = OkHttpClient.Builder()
+        val okhttpClient = OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor()
                     .setLevel(

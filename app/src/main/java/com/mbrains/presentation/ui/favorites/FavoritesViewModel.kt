@@ -10,7 +10,7 @@ import io.realm.RealmResults
 
 class FavoritesViewModel : ViewModel() {
 
-    val realmManager = RealmManager()
+    private val realmManager = RealmManager()
 
     private lateinit var favoriteList: LiveData<List<Repos>>
 
@@ -19,7 +19,7 @@ class FavoritesViewModel : ViewModel() {
     }
 
     fun getFavorite(): LiveData<List<Repos>> {
-        return favoriteList!!
+        return favoriteList
     }
 
 }

@@ -22,7 +22,7 @@ class RealmManager {
     }
 
     fun insertNoDublicate(repos: Repos) {
-        var findDuplicate = realm.where(Repos::class.java).equalTo("fullName", repos.fullName).findFirst()
+        val findDuplicate = realm.where(Repos::class.java).equalTo("fullName", repos.fullName).findFirst()
         if (findDuplicate == null) {
             Log.d("NAIL", "Уникальный элемент")
             realm.beginTransaction()
@@ -30,7 +30,7 @@ class RealmManager {
             if (realm.where(Repos::class.java).max("id") != null) {
                 newId = realm.where(Repos::class.java).max("id") as Long + 1
             }
-            var reposRealmObj = realm.createObject(Repos::class.java, newId)
+            val reposRealmObj = realm.createObject(Repos::class.java, newId)
             reposRealmObj.name = repos.name
             reposRealmObj.fullName = repos.fullName
             reposRealmObj.avatar_url = repos.owner_?.avatarUrl

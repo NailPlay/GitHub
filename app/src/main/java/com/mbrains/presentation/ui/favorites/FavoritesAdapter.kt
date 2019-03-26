@@ -11,9 +11,9 @@ import kotlinx.android.synthetic.main.repo_item.view.*
 
 
 class FavoritesAdapter(
-    var items: List<Repos>,
-    var listenerItem : ItemClickListener,
-    var listenerDelete: ItemClickListener
+    private var items: List<Repos>,
+    private var listenerItem : ItemClickListener,
+    private var listenerDelete: ItemClickListener
 ) : RecyclerView.Adapter<ReposViewHolder>() {
 
 
@@ -27,18 +27,18 @@ class FavoritesAdapter(
     }
 
     override fun onBindViewHolder(holder: ReposViewHolder, position: Int) {
-        holder.view.repo_name.text = items.get(position).name
-        holder.view.repo_description.text = items.get(position).description
-        holder.view.repo_language.text = items.get(position).language
-        holder.view.repo_stars.text = items.get(position).startCount.toString()
-        holder.view.repo_forks.text = items.get(position).forks_count
-        holder.view.cardViewContent.setOnClickListener({ v -> listenerItem.onItemClicked(items.get(position)) })
+        holder.view.repo_name.text = items[position].name
+        holder.view.repo_description.text = items[position].description
+        holder.view.repo_language.text = items[position].language
+        holder.view.repo_stars.text = items[position].startCount.toString()
+        holder.view.repo_forks.text = items[position].forks_count
+        holder.view.cardViewContent.setOnClickListener { v -> listenerItem.onItemClicked(items[position]) }
         holder.view.btnSwipe.text = "Delete"
         holder.view.btnSwipe.setBackgroundColor(Color.RED)
-        holder.view.btnSwipe.setOnClickListener({
+        holder.view.btnSwipe.setOnClickListener {
             (holder.itemView.swipeMenu as SwipeMenuLayout).quickClose()
-            listenerDelete.onItemClicked(items.get(position))
-        })
+            listenerDelete.onItemClicked(items[position])
+        }
 
     }
 

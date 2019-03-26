@@ -29,7 +29,7 @@ class ReposFragment : Fragment() {
 
     private lateinit var reposAdapter: ReposAdapter
 
-    var request: String = ""
+    private var request: String = ""
 
     val realmManager = RealmManager()
 
@@ -80,7 +80,7 @@ class ReposFragment : Fragment() {
             reposViewModel.retry()
         }, object : ItemClickListener {
             override fun onItemClicked(repos: Repos) {
-                val transaction = getParentFragment()!!.childFragmentManager.beginTransaction()
+                val transaction = parentFragment!!.childFragmentManager.beginTransaction()
                 val name = repos.name ?: "-"
                 val fullname = repos.fullName ?: "-"
                 val html_url = repos.html_url ?: "-"
@@ -109,7 +109,7 @@ class ReposFragment : Fragment() {
         return view
     }
 
-    fun loadRequest(name: String) {
+    private fun loadRequest(name: String) {
         Log.d("NAIL", "loadRequest")
 
         reposViewModel.initSearch(name)

@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.repo_item.view.*
 
 class ReposAdapter(
     private val retryCallback: () -> Unit,
-    var listenerItem: ItemClickListener,
-    var listenerAdd: ItemClickListener
+    private var listenerItem: ItemClickListener,
+    private var listenerAdd: ItemClickListener
 ) :
     PagedListAdapter<Repos, RecyclerView.ViewHolder>(ReposDiffCallback) {
 
@@ -35,16 +35,16 @@ class ReposAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             R.layout.repo_item -> {
-                var repos = getItem(position)
+                val repos = getItem(position)
                 (holder as ReposViewHolder).bindTo(getItem(position))
-                holder.itemView.cardViewContent.setOnClickListener({ v -> listenerItem.onItemClicked(repos!!) })
+                holder.itemView.cardViewContent.setOnClickListener { v -> listenerItem.onItemClicked(repos!!) }
                 holder.view.btnSwipe.text = "Add"
                 holder.view.btnSwipe.setBackgroundColor(Color.DKGRAY)
-                holder.view.btnSwipe.setOnClickListener({
+                holder.view.btnSwipe.setOnClickListener {
                     listenerAdd.onItemClicked(repos!!)
                     (holder.itemView.swipeMenu as SwipeMenuLayout).quickClose()
 
-                })
+                }
             }
             R.layout.network_item -> (holder as NetworkStateViewHolder).bindTo(networkState)
         }

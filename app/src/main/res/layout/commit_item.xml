@@ -53,9 +53,6 @@
                 app:layout_constraintStart_toEndOf="@+id/nameAuthor"
                 app:layout_constraintTop_toTopOf="@+id/nameAuthor"
                 app:layout_constraintBottom_toBottomOf="@+id/nameAuthor"/>
-        <![CDATA[
-    /
-    />
-]]>
+
 </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

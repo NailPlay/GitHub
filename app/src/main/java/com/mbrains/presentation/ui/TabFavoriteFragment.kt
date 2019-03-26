@@ -16,7 +16,7 @@ class TabFavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var v =  inflater.inflate(R.layout.fragment_tab_favorite, container, false)
+        val v =  inflater.inflate(R.layout.fragment_tab_favorite, container, false)
         val manager = childFragmentManager
         val transaction = manager.beginTransaction()
         transaction.replace(R.id.tabfavorite_frame, FavoritesFragment())

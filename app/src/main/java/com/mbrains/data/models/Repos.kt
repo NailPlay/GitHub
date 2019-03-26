@@ -5,7 +5,7 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-public open class Repos(
+open class Repos(
     @PrimaryKey @SerializedName("id") var id: Int? = 0,
     @SerializedName("name") var name: String? = null,
     @SerializedName("description") var description: String? = null,

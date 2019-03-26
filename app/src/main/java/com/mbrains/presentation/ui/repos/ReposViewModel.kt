@@ -23,7 +23,7 @@ class ReposViewModel : ViewModel()
     fun initSearch(request: String){
         compositeDisposable.clear()
         sourceFactory = ReposDataSourceFactory(compositeDisposable, request)
-        var config = PagedList.Config.Builder()
+        val config = PagedList.Config.Builder()
             .setPageSize(2)
             .setEnablePlaceholders(false)
             .build()
@@ -36,10 +36,12 @@ class ReposViewModel : ViewModel()
     }
 
     fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<ReposDataSource, NetworkState>(
-        sourceFactory!!.reposDataSourceLiveData, { it.networkState })
+        sourceFactory!!.reposDataSourceLiveData
+    ) { it.networkState }
 
     fun getInitialState(): LiveData<NetworkState> = Transformations.switchMap<ReposDataSource, NetworkState>(
-        sourceFactory!!.reposDataSourceLiveData, { it.initialLoad })
+        sourceFactory!!.reposDataSourceLiveData
+    ) { it.initialLoad }
 
 
 }
